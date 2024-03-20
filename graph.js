@@ -45,10 +45,46 @@ class Graph {
   }
 
   // this function returns an array of Node values using DFS
-  depthFirstSearch(start) {}
+  depthFirstSearch(start) {
+    let toVisitStack = [start];
+    let seen = new Set(toVisitStack);
+    let result = [];
+
+    while (toVisitStack.length) {
+      let currentNode = toVisitStack.pop();
+      if (!seen.has(currentNode)) {
+        seen.add(currentNode);
+        result.push(currentNode.value);
+        for (let neighbor of currentNode.adjacent) {
+          if (!seen.has(neighbor)) {
+            toVisitStack.push(neighbor);
+          }
+        }
+      }
+    }
+    return result;
+  }
 
   // this function returns an array of Node values using BFS
-  breadthFirstSearch(start) {}
+  breadthFirstSearch(start) {
+    let toVisitQueue = [start];
+    let seen = new Set(toVisitQueue);
+    let result = [];
+
+    while (toVisitQueue.length) {
+      let currentNode = toVisitQueue.shift();
+      if (!seen.has(currentNode)) {
+        seen.add(currentNode);
+        result.push(currentNode.value);
+        for (let neighbor of currentNode.adjacent) {
+          if (!seen.has(neighbor)) {
+            toVisitQueue.push(neighbor);
+          }
+        }
+      }
+    }
+    return result;
+  }
 }
 
 module.exports = { Graph, Node };
